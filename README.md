@@ -22,9 +22,9 @@ Note: the library uses [exception chaining](https://www.python.org/dev/peps/pep-
 ## Usage
 
 ```python
-import semver
+from semver import version
 
-print(semver.equals('1.0.0', '1.0.0'))
+print(version('1.0.0').equals(version('1.0.0')))
 ```
 
 ## Testing

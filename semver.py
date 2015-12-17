@@ -13,101 +13,89 @@ class version:
 		except IndexError as e:
 			raise RuntimeError("Versions must be in the form of X.Y.Z") from e
 			
-def equals(v1, v2):
-	version1 = version(v1)
-	version2 = version(v2)
-	if version1.major != version2.major:
-		return False
-	if version1.minor != version2.minor:
-		return False
-	if version1.patch != version2.patch:
-		return False
-	return True
-
-def gt(v1, v2):
-	version1 = version(v1)
-	version2 = version(v2)
-	if version1.major > version2.major:
+	def equals(self, v2):
+		if self.major != v2.major:
+			return False
+		if self.minor != v2.minor:
+			return False
+		if self.patch != v2.patch:
+			return False
 		return True
-	elif version1.major == version2.major:
-		if version1.minor > version2.minor:
+
+	def lt(self, v2):
+		if self.major > v2.major:
 			return True
-		elif version1.minor == version2.minor:
-			if version1.patch > version2.patch:
+		elif self.major == v2.major:
+			if self.minor > v2.minor:
 				return True
+			elif self.minor == v2.minor:
+				if self.patch > v2.patch:
+					return True
+				else:
+					return False
 			else:
 				return False
 		else:
 			return False
-	else:
-		return False
 
-def gte(v1, v2):
-	version1 = version(v1)
-	version2 = version(v2)
-	if version1.major > version2.major:
-		return True
-	elif version1.major == version2.major:
-		if version1.minor > version2.minor:
+	def lte(self, v2):
+		if self.major > v2.major:
 			return True
-		elif version1.minor == version2.minor:
-			if version1.patch > version2.patch:
+		elif self.major == v2.major:
+			if self.minor > v2.minor:
 				return True
-			elif version1.patch == version2.patch:
-				return True
+			elif self.minor == v2.minor:
+				if self.patch > v2.patch:
+					return True
+				elif self.patch == v2.patch:
+					return True
+				else:
+					return False
 			else:
 				return False
 		else:
 			return False
-	else:
-		return False
 
-def satisfies(v1, v2):
-	version1 = version(v1)
-	version2 = version(v2)
-	if version1.major != version2.major:
-		return False
-	if version1.minor != version2.minor:
-		return False
-	if version2.patch >= version1.patch:
-		return True
-	else:
-		return False
-
-def lt(v1, v2):
-	version1 = version(v1)
-	version2 = version(v2)
-	if version1.major < version2.major:
-		return True
-	elif version1.major == version2.major:
-		if version1.minor < version2.minor:
+	def satisfies(self, v2):
+		if self.major != v2.major:
+			return False
+		if self.minor != v2.minor:
+			return False
+		if v2.patch >= self.patch:
 			return True
-		elif version1.minor == version2.minor:
-			if version1.patch < version2.patch:
+		else:
+			return False
+
+	def gt(self, v2):
+		if self.major < v2.major:
+			return True
+		elif self.major == v2.major:
+			if self.minor < v2.minor:
 				return True
+			elif self.minor == v2.minor:
+				if self.patch < v2.patch:
+					return True
+				else:
+					return False
 			else:
 				return False
 		else:
 			return False
-	else:
-		return False
 
-def lte(v1, v2):
-	version1 = version(v1)
-	version2 = version(v2)
-	if version1.major < version2.major:
-		return True
-	elif version1.major == version2.major:
-		if version1.minor < version2.minor:
+	def gte(self, v2):
+		if self.major < v2.major:
 			return True
-		elif version1.minor == version2.minor:
-			if version1.patch < version2.patch:
+		elif self.major == v2.major:
+			if self.minor < v2.minor:
 				return True
-			elif version1.patch == version2.patch:
-				return True
+			elif self.minor == v2.minor:
+				if self.patch < v2.patch:
+					return True
+				elif self.patch == v2.patch:
+					return True
+				else:
+					return False
 			else:
 				return False
 		else:
 			return False
-	else:
-		return False
